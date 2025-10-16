@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:migrate:up": "tsx src/db/migrator.ts",
+    "db:generate-types": "npx kysely-codegen --out-file src/db/types.ts"
   },
   "repository": {
     "type": "git",
