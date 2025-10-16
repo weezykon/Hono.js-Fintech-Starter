@@ -1,52 +1,55 @@
-import { Hono } from 'hono';
-import { zValidator } from '@hono/zod-validator';
-import { registerSchema, loginSchema } from './zod';
-import { hashPassword, createToken, comparePasswords } from './auth.service';
-import { db } from '../../db';
+import { zValidator } from "@hono/zod-validator";
+import { Hono } from "hono";
+import {
+	comparePasswords,
+	createToken,
+	createUser,
+	getUserByEmail,
+	hashPassword,
+} from "./auth.service";
+import { loginSchema, registerSchema } from "./zod";
 
 const auth = new Hono();
 
-auth.post('/register', zValidator('json', registerSchema), async (c) => {
-  const { email, password } = c.req.valid('json');
-  const hashedPassword = await hashPassword(password);
+auth.post("/register", zValidator("json", registerSchema), async (c) => {
+	const { email, password } = c.req.valid("json");
+	const hashedPassword = await hashPassword(password);
 
-  try {
-    const user = await db
-      .insertInto('users')
-      .values({ email, password: hashedPassword })
-      .returning(['id', 'email'])
-      .executeTakeFirstOrThrow();
+	try {
+		const user = await createUser({ email, password: hashedPassword });
+		const token = await createToken({ id: user.id, email: user.email });
 
-    const token = await createToken({ id: user.id, email: user.email });
-
-    return c.json({ token });
-  } catch (error) {
-    return c.json({ error: 'User already exists' }, 400);
-  }
+		return c.json({ token });
+	} catch (error) {
+		if (error instanceof Error && error.message.includes("duplicate key")) {
+			return c.json({ error: "User already exists" }, 400);
+		}
+		return c.json({ error: "Failed to register user" }, 500);
+	}
 });
 
-auth.post('/login', zValidator('json', loginSchema), async (c) => {
-  const { email, password } = c.req.valid('json');
+auth.post("/login", zValidator("json", loginSchema), async (c) => {
+	const { email, password } = c.req.valid("json");
 
-  const user = await db
-    .selectFrom('users')
-    .selectAll()
-    .where('email', '=', email)
-    .executeTakeFirst();
+	try {
+		const user = await getUserByEmail(email);
 
-  if (!user) {
-    return c.json({ error: 'Invalid credentials' }, 401);
-  }
+		if (!user) {
+			return c.json({ error: "Invalid credentials" }, 401);
+		}
 
-  const passwordMatch = await comparePasswords(password, user.password);
+		const passwordMatch = await comparePasswords(password, user.password);
 
-  if (!passwordMatch) {
-    return c.json({ error: 'Invalid credentials' }, 401);
-  }
+		if (!passwordMatch) {
+			return c.json({ error: "Invalid credentials" }, 401);
+		}
 
-  const token = await createToken({ id: user.id, email: user.email });
+		const token = await createToken({ id: user.id, email: user.email });
 
-  return c.json({ token });
+		return c.json({ token });
+	} catch (error) {
+		return c.json({ error: "Failed to login" }, 500);
+	}
 });
 
 export default auth;
