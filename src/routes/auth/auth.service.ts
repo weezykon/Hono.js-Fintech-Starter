@@ -20,7 +20,7 @@ export const createToken = async (payload: { id: number; email: string }) => {
 	return sign(payload, secret);
 };
 
-export const createUser = async (user: Omit<User, "id">) => {
+export const createUser = async (user: Omit<User, "id" | "created_at">) => {
 	return db
 		.insertInto("users")
 		.values(user)
