@@ -21,6 +21,7 @@
   "homepage": "https://github.com/weezykon/Hono.js-Fintech-Starter#readme",
   "dependencies": {
     "@hono/zod-validator": "^0.7.4",
+    "bcryptjs": "^3.0.2",
     "bullmq": "^5.61.0",
     "dotenv": "^17.2.3",
     "hono": "^4.9.12",
@@ -29,6 +30,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^24.7.2",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
