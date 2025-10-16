@@ -4,8 +4,10 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+import { User } from './types';
+
 interface Database {
-  // tables will be defined here
+  users: User;
 }
 
 const dialect = new PostgresDialect({
