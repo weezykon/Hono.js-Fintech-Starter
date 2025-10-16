@@ -38,7 +38,8 @@ export const db = new Kysely<Database>({ dialect });
 // Validate database connection on startup
 export async function validateDatabaseConnection(): Promise<void> {
 	try {
-		await db.selectFrom("users").select("id").limit(1).execute();
+		// Just test the connection with a simple query, don't require tables to exist
+		await db.selectNoFrom((eb) => eb.val(1).as("test")).execute();
 		console.log("Database connection validated successfully");
 	} catch (error) {
 		console.error("Failed to connect to database:", error);
