@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 
 import { logger } from './middleware/logging.middleware';
 import { errorHandler } from './middleware/error.middleware';
+import jobs from './routes/jobs/jobs.controller';
 
 dotenv.config();
 
