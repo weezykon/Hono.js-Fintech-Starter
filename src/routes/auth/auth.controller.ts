@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { authRateLimiter } from "../../middleware/rate-limit.middleware";
 import {
 	comparePasswords,
 	createToken,
@@ -10,6 +11,10 @@ import {
 import { loginSchema, registerSchema } from "./zod";
 
 const auth = new Hono();
+
+// Apply rate limiting to auth endpoints
+auth.use("/register", authRateLimiter);
+auth.use("/login", authRateLimiter);
 
 auth.post("/register", zValidator("json", registerSchema), async (c) => {
 	const { email, password } = c.req.valid("json");
@@ -47,7 +52,7 @@ auth.post("/login", zValidator("json", loginSchema), async (c) => {
 		const token = await createToken({ id: user.id, email: user.email });
 
 		return c.json({ token });
-	} catch (error) {
+	} catch (_error) {
 		return c.json({ error: "Failed to login" }, 500);
 	}
 });

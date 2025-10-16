@@ -1,56 +1,56 @@
 {
-  "name": "hono.js-fintech-starter",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "vitest",
-    "db:migrate:up": "tsx src/db/migrator.ts",
-    "db:generate-types": "npx kysely-codegen --out-file src/db/types.ts",
-    "dev": "tsx watch src/index.ts",
-    "lint": "biome lint .",
-    "format": "biome format --write .",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "src/**/*.ts": "biome check --write"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/weezykon/Hono.js-Fintech-Starter.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/weezykon/Hono.js-Fintech-Starter/issues"
-  },
-  "homepage": "https://github.com/weezykon/Hono.js-Fintech-Starter#readme",
-  "dependencies": {
-    "@hono/node-server": "^1.19.5",
-    "@hono/zod-validator": "^0.7.4",
-    "bcryptjs": "^3.0.2",
-    "bullmq": "^5.61.0",
-    "dotenv": "^17.2.3",
-    "hono": "^4.9.12",
-    "kysely": "^0.28.8",
-    "pg": "^8.16.3",
-    "zod": "^4.1.12"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^2.2.6",
-    "@types/bcryptjs": "^2.4.6",
-    "@types/node": "^24.7.2",
-    "@types/pg": "^8.15.5",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.4",
-    "tsx": "^4.20.6",
-    "typescript": "^5.9.3",
-    "vitest": "^3.2.4"
-  }
+	"name": "hono.js-fintech-starter",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "vitest",
+		"db:migrate:up": "tsx src/db/migrator.ts",
+		"db:generate-types": "npx kysely-codegen --out-file src/db/types.ts",
+		"dev": "tsx watch src/index.ts",
+		"lint": "biome lint .",
+		"format": "biome format --write .",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"src/**/*.ts": "biome check --write"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/weezykon/Hono.js-Fintech-Starter.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/weezykon/Hono.js-Fintech-Starter/issues"
+	},
+	"homepage": "https://github.com/weezykon/Hono.js-Fintech-Starter#readme",
+	"dependencies": {
+		"@hono/node-server": "^1.19.5",
+		"@hono/zod-validator": "^0.7.4",
+		"bcryptjs": "^3.0.2",
+		"bullmq": "^5.61.0",
+		"dotenv": "^17.2.3",
+		"hono": "^4.9.12",
+		"kysely": "^0.28.8",
+		"pg": "^8.16.3",
+		"zod": "^4.1.12"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.2.6",
+		"@types/bcryptjs": "^2.4.6",
+		"@types/node": "^24.7.2",
+		"@types/pg": "^8.15.5",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.2.4",
+		"tsx": "^4.20.6",
+		"typescript": "^5.9.3",
+		"vitest": "^3.2.4"
+	}
 }
