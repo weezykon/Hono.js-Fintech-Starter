@@ -52,7 +52,7 @@ let server: ReturnType<typeof serve>;
 async function startServer() {
 	try {
 		// Validate database connection before starting server
-		// await validateDatabaseConnection();
+		await validateDatabaseConnection();
 
 		server = serve(
 			{
