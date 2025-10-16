@@ -3,11 +3,15 @@ import auth from './routes/auth/auth.controller';
 import { authMiddleware } from './middleware/auth.middleware';
 import * as dotenv from 'dotenv';
 
+import { logger } from './middleware/logging.middleware';
+import { errorHandler } from './middleware/error.middleware';
+
 dotenv.config();
 
 const app = new Hono();
 
-import jobs from './routes/jobs/jobs.controller';
+app.use('*', logger);
+app.use('*', errorHandler);
 
 app.route('/auth', auth);
 app.route('/jobs', jobs);
